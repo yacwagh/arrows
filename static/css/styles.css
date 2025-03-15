@@ -1,0 +1,328 @@
+:root {
+    --dark-bg: #1a1a1a;
+    --darker-bg: #141414;
+    --card-bg: #242424;
+    --border-color: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --accent-color: #2196F3;
+    --accent-hover: #1976D2;
+    --danger-color: #f44336;
+    --success-color: #4CAF50;
+    --warning-color: #FFC107;
+    --list-item-bg: #2a2a2a;
+    --modal-bg: #2a2a2a;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Header Styles */
+header {
+    margin-bottom: 3rem;
+}
+
+.brand-logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.display-5 {
+    color: var(--text-primary);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    color: var(--text-secondary);
+}
+
+/* Card Styles */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: var(--darker-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-secondary);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--text-primary);
+    background-color: var(--accent-color);
+}
+
+/* Form Styles */
+.form-control, .form-select {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--darker-bg);
+    border-color: var(--accent-color);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-text {
+    color: var(--text-secondary);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* Progress Bar */
+.progress {
+    background-color: var(--darker-bg);
+    border-radius: 8px;
+    height: 0.5rem;
+}
+
+.progress-bar {
+    background-color: var(--accent-color);
+}
+
+/* Alert Styles */
+.alert {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+}
+
+.alert-danger {
+    border-left: 4px solid var(--danger-color);
+}
+
+/* Feature Cards */
+.feature-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card .card-body {
+    padding: 2rem;
+}
+
+.feature-card i {
+    color: var(--accent-color);
+}
+
+.feature-card .card-title {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.feature-card .card-text {
+    color: var(--text-secondary);
+}
+
+/* Footer */
+footer {
+    background-color: var(--darker-bg);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+footer p {
+    color: var(--text-secondary);
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: var(--modal-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+.modal-title {
+    color: var(--text-primary);
+}
+
+/* List Group Styles */
+.list-group-item {
+    background-color: var(--list-item-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.list-group-item:hover {
+    background-color: var(--card-bg);
+}
+
+.list-group-item-action:hover {
+    background-color: var(--card-bg);
+}
+
+/* Badge Styles */
+.badge {
+    background-color: var(--accent-color);
+    color: var(--text-primary);
+}
+
+.badge.bg-danger {
+    background-color: var(--danger-color) !important;
+}
+
+.badge.bg-info {
+    background-color: var(--accent-color) !important;
+}
+
+/* Threat Details */
+.threat-details {
+    color: var(--text-primary);
+}
+
+.threat-details h5, 
+.threat-details h6 {
+    color: var(--text-primary);
+}
+
+.threat-details p {
+    color: var(--text-secondary);
+}
+
+/* Related Threats */
+.related-threats {
+    background-color: var(--list-item-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.related-threats h6 {
+    color: var(--text-primary);
+}
+
+.related-threats .list-group-item {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
+}
+
+/* Text Colors */
+.text-muted {
+    color: var(--text-primary) !important;
+} 

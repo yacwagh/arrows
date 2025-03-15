@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Model Visualization</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/vis-network.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <header class="py-3 mb-4 border-bottom">
+            <div class="container-fluid d-flex justify-content-between align-items-center">
+                <div>
+                    <span class="brand-logo"><i class="bi bi-shield-lock"></i> Sekai Corp</span>
+                    <h1 class="h4 m-0 d-inline-block">Threat Model Visualization</h1>
+                </div>
+                <a href="/" class="btn btn-outline-primary">
+                    <i class="bi bi-arrow-left me-2"></i>New Analysis
+                </a>
+            </div>
+        </header>
+
+        <div class="row">
+            <!-- Network Graph -->
+            <div class="col-lg-8">
+                <div class="card mb-4 fade-in">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title m-0">
+                                <i class="bi bi-diagram-3 me-2"></i>System Architecture
+                            </h5>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-outline-primary" id="showAllBtn">
+                                    <i class="bi bi-grid me-2"></i>Show All
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="showComponentsBtn">
+                                    <i class="bi bi-box me-2"></i>Components
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="showDataFlowsBtn">
+                                    <i class="bi bi-arrow-left-right me-2"></i>Data Flows
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="showAssetsBtn">
+                                    <i class="bi bi-shield me-2"></i>Assets
+                                </button>
+                                <button type="button" class="btn btn-outline-primary" id="showTrustBoundariesBtn">
+                                    <i class="bi bi-diagram-3 me-2"></i>Trust Boundaries
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="network-container" style="height: 80vh; border-radius: 0 0 1rem 1rem;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar with Threats and Details -->
+            <div class="col-lg-4">
+                <div class="card mb-4 fade-in">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title m-0">
+                            <i class="bi bi-shield-exclamation me-2"></i>Threats Summary
+                        </h5>
+                        <span class="badge bg-danger" id="threatCount">0</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush overflow-auto" id="threatsList" style="max-height: 40vh;">
+                            <!-- Threats will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <h5 class="card-title m-0">
+                            <i class="bi bi-info-circle me-2"></i>Selected Element Details
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="elementDetails">
+                            <p class="text-muted text-center">
+                                <i class="bi bi-hand-index me-2"></i>Click on an element in the graph to view details
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <div class="stat-card fade-in">
+                            <div class="stat-label">Components</div>
+                            <div class="stat-value" id="componentCount">0</div>
+                            <i class="bi bi-box stat-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card fade-in">
+                            <div class="stat-label">Assets</div>
+                            <div class="stat-value" id="assetCount">0</div>
+                            <i class="bi bi-database stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Threat Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailsModalContent">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Pass the task ID to the frontend
+        const taskId = "{{ task_id }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/graph.js') }}"></script>
+</body>
+</html>

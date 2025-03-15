@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrows</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container my-5">
+        <header class="text-center mb-5">
+            <span class="brand-logo"><i class="bi bi-shield-lock"></i> Sekai Corp</span>
+            <h1 class="display-5">Arrows : AI Agent for Threat Modeling</h1>
+            <p class="lead">Analyze your application for security threats</p>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card fade-in">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="modelingTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">
+                                    <i class="bi bi-file-text me-2"></i>Description Analysis
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="codebase-tab" data-bs-toggle="tab" data-bs-target="#codebase" type="button" role="tab" aria-controls="codebase" aria-selected="false">
+                                    <i class="bi bi-code-square me-2"></i>Codebase Analysis
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <!-- Description Analysis Tab -->
+                            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                <form id="descriptionForm">
+                                    <div class="mb-3">
+                                        <label for="appDescription" class="form-label">
+                                            <i class="bi bi-pencil-square me-2"></i>Application Description
+                                        </label>
+                                        <textarea class="form-control" id="appDescription" rows="6" placeholder="Describe your application architecture, components, data flows, and security concerns in detail..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modelSelect" class="form-label">
+                                            <i class="bi bi-cpu me-2"></i>Select LLM Model
+                                        </label>
+                                        <select class="form-select" id="modelSelect" name="model">
+                                            <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo : fastest, recommended for first shot</option>
+                                            <option value="deepseek/deepseek-r1:free">DeepSeek R1 : free, but super slow</option>
+                                            <option value="anthropic/claude-3.7-sonnet">Claude 3.7 Sonnet : the best, but expensive</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary" id="analyzeDescBtn">
+                                            <i class="bi bi-search me-2"></i>Analyze Description
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Codebase Analysis Tab -->
+                            <div class="tab-pane fade" id="codebase" role="tabpanel" aria-labelledby="codebase-tab">
+                                <form id="codebaseForm" enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="codebaseUpload" class="form-label">
+                                            <i class="bi bi-file-earmark-zip me-2"></i>Upload Codebase (ZIP file)
+                                        </label>
+                                        <input class="form-control" type="file" id="codebaseUpload" accept=".zip">
+                                        <div class="form-text">Upload a ZIP file containing your application code for whitebox analysis.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="modelSelectCodebase" class="form-label">
+                                            <i class="bi bi-cpu me-2"></i>Select LLM Model
+                                        </label>
+                                        <select class="form-select" id="modelSelect" name="model">
+                                            <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo : fastest, recommended for first shot</option>
+                                            <option value="deepseek/deepseek-r1:free">DeepSeek R1 : free, but super slow</option>
+                                            <option value="anthropic/claude-3.7-sonnet">Claude 3.7 Sonnet : the best, but expensive</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary" id="analyzeCodeBtn">
+                                            <i class="bi bi-search me-2"></i>Analyze Codebase
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Progress Section (Initially Hidden) -->
+                <div id="analysisProgress" class="card mt-4 d-none fade-in">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-3">
+                            <i class="bi bi-gear-wide-connected me-2 pulse"></i>
+                            Analyzing your application...
+                        </h5>
+                        <div class="progress mb-3">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                        </div>
+                        <p id="loadingMessage" class="card-text text-muted">Initializing security analysis...</p>
+                    </div>
+                </div>
+
+                <!-- Error Alert (Initially Hidden) -->
+                <div id="errorAlert" class="alert alert-danger mt-4 d-none fade-in" role="alert">
+                    <h5 class="alert-heading mb-3"><i class="bi bi-exclamation-triangle-fill me-2"></i>More Details Needed</h5>
+                    <div id="errorMessage"></div>
+                    <hr class="my-3 border-light">
+                    <p class="mb-0 small">Please provide more detailed information about the application architecture and security aspects to enable thorough threat modeling.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Highlights Section -->
+        <div class="row mt-5 pt-3">
+            <div class="col-12 text-center mb-4">
+                <h2>Advanced Security Analysis</h2>
+                <p class="text-muted">Comprehensive threat modeling based on STRIDE methodology</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-shield-check text-primary mb-3" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title">Threats Detection</h5>
+                        <p class="card-text text-muted">Identify potential security threats in your application's architecture and design.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-gear-wide-connected text-primary mb-3" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title">Interactive Visualization</h5>
+                        <p class="card-text text-muted">Visualize your application's components, data flows, and potential threats with an interactive graph.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-patch-check text-primary mb-3" style="font-size: 2.5rem;"></i>
+                        <h5 class="card-title">Mitigation Strategies</h5>
+                        <p class="card-text text-muted">Get actionable recommendations to address identified threats and strengthen your security posture.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 text-center text-muted mt-5" style="background-color: var(--darker-bg); border-top: 1px solid var(--border-color);">
+        <div class="container">
+            <p class="mb-1">Cooked by <a href="https://www.linkedin.com/in/yacine-souam/" class="dev-link" target="_blank">Yacine Souam</a> and <a href="https://www.linkedin.com/in/fadi-a-1294bb1b0/" class="dev-link" target="_blank">Fadi Arab</a></p>
+            <p class="small mb-0">© 2025 Sekai Corp</p>
+        </div>
+    </footer>
+
+    <style>
+        .dev-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .dev-link:hover {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        .dev-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -1px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        .dev-link:hover::after {
+            width: 100%;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
