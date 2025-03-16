@@ -177,10 +177,9 @@ def get_task_data(task_id):
     
     return jsonify(task['result'])
 
-# Clean up old tasks (in a produ
+# Clean up old tasks
 @app.before_request
 def cleanup_old_tasks():
-    # This is a simple approach - in production, you'd use a proper task queue
     tasks_to_remove = []
     for task_id, task in analysis_tasks.items():
         if task.get('status') in ('completed', 'failed') and len(analysis_tasks) > 100:
