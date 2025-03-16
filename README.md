@@ -119,8 +119,8 @@ python app.py
 2. Open your browser and navigate to `http://localhost:5000`
 
 3. Choose your analysis method:
-   - **Description Analysis**: Provide a detailed description of your application, an example is in application.txt
-   - **Codebase Analysis**: Upload a ZIP file containing your application code, an example is in react-app/ that needs to be zipped
+   - **Description Analysis**: Provide a detailed description of your application, an example is in examples/application.txt
+   - **Codebase Analysis**: Upload a ZIP file containing your application code, an example is in examples/react-app/ that needs to be zipped
 
 4. Select your preferred LLM model for analysis (gpt is the fatest, claude 3.7 is the best but also the most expensive)
 
