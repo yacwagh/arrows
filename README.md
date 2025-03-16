@@ -2,6 +2,8 @@
 
 AI-driven threat modeling tool that helps identify and analyze security threats in your application architecture following the STRIDE methodology.
 
+![image](https://github.com/user-attachments/assets/4bd29871-a032-40f8-9dea-d1bd03acfdb1)
+
 ## Features
 
 - **AI-Powered Analysis**: Leverages advanced language models to analyze application descriptions and codebases
