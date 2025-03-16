@@ -144,6 +144,7 @@ arrows/
 │   └── js/
 ├── templates/          # HTML templates
 └── requirements.txt    # Python dependencies
+└── examples /          # Examples of application description and webapp codebase to test
 ```
 
 ## Technologies Used
