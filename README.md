@@ -86,7 +86,7 @@ graph TB
 1. Clone the repository:
 ```bash
 git clone https://github.com/yacwagh/arrows.git
-cd ai-threat-modeling
+cd arrows
 ```
 
 2. Install dependencies:
@@ -94,8 +94,7 @@ cd ai-threat-modeling
 pip install -r requirements.txt
 ```
 
-3. Set up environment variables:
-Create a `.env` file in the root directory with your preferred API configuration:
+3. Set up environment variables in .env file :
 
 For OpenAI:
 ```
